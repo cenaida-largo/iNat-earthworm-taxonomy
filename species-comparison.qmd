@@ -93,6 +93,7 @@ iNaturalist Taxonomy DarwinCore Archive:
 
 ```{r}
 #| label: import-INAT
+#| message: FALSE
 
 INAT_raw <- read_csv(
   here("data", "raw", "inaturalist-taxonomy.dwca", "taxa.csv"))
@@ -150,17 +151,34 @@ INAT <- INAT_raw %>%
 
 ## WORMS
 
+The raw dataset includes the following status:
+
+```{r}
+#| label: status-WORMS
+
+unique(WORMS_raw$Status)
+```
+
+(at)thirty_legs commented in the flag:
+
+"It also seems like iNaturalist did not import some species that have the uncertain/unassessed status on WoRMS, leading to further holes in the iNat taxonomy."
+
+Since the comment implies that only "some" species with these status were not imported,
+
+I will only remove the "unaccepted" species from the database.
+
 ```{r}
 #| label: clean-WORMS
 
 WORMS <- WORMS_raw %>%
-  filter(RankName == "Species",
-         Status != "unaccepted") %>%
+  filter(RankName == "Species", 
+         Status != c("unaccepted")) %>% 
   select(family = Family,
          genus = Genus,
          specificEpithet = Species,
          author = Authority,
-         species_WORMS = ScientificName) %>% 
+         species_WORMS = ScientificName,
+         Status) %>% 
   distinct(species_WORMS,
            author,
            .keep_all = TRUE) %>%
@@ -186,3 +204,109 @@ WME <- WME_raw %>%
           genus,
           specificEpithet)
 ```
+
+# Results
+
+## Species total
+
+### INAT
+
+1.  Detect duplicates
+
+    ```{r}
+    #| label: duplicates-INAT
+
+    INAT %>% count(species_INAT) %>% filter(n > 1)
+    ```
+
+    No duplicates found in the iNaturalist taxonomy dataset
+
+2.  Count species
+
+    ```{r}
+    #| label: species-INAT
+
+    sppINAT <- INAT %>%
+      count(species_INAT) %>%
+      summarise(total = sum(n))
+    ```
+
+    Species total = 628.
+
+    Only 201 spp currently have Research Grade observations on iNaturalist (24-05-2026).
+
+3.  Family summary
+
+    ```{r}
+    #| label: sum-INAT
+
+    INAT |> count(family)
+    ```
+
+### WORMS
+
+1.  Detect duplicates
+
+    ```{r}
+    #| label: duplicates-WORMS
+
+    WORMS %>%
+      count(species_WORMS) %>%
+      filter(n > 1)
+    ```
+
+    18 duplicate species detected in the WoRMS taxon list
+
+2.  Count species
+
+    ```{r}
+    #| label: species-WORMS
+
+    sppWORMS <- WORMS %>%
+      count(species_WORMS) %>%
+      summarise(total = sum(n))
+    ```
+
+    Species total = 5555 - 18 = 5537.
+
+3.  Family summary
+
+    ```{r}
+    #| label: sum-WORMS
+
+    WORMS |> count(family)
+    ```
+
+### WME
+
+1.  Detect duplicates
+
+    ```{r}
+    #| label: duplicates-WME
+
+    WME %>%
+      count(species_WME) %>%
+      filter(n > 1)
+    ```
+
+    No duplicates detected.
+
+2.  Count species
+
+    ```{r}
+    #| label: species-WME
+
+    sppWME <- WME %>%
+      count(species_WME) %>%
+      summarise(total = sum(n))
+    ```
+
+    Total species = 5418.
+
+3.  Family summary
+
+    ```{r}
+    #| label: sum-WME
+
+    WME |> count(family)
+    ```
