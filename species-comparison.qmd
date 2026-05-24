@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-## Overview
+# Overview
 
 This script explores the alignment of the iNaturalist earthworm (Crassiclitellata) taxonomy with:
 
@@ -23,11 +23,11 @@ Package versions are tracked with \`renv\`.
 #| message: false
 #| warning: false
 
-library(here)    #Project relative file paths
-library(readr)   #Import data files into R
-library(readxl)  #Import excel files into R
-library(dplyr)   #Manipulating data
-library(stringr) #Manipulating text
+library(here)     #Project relative file paths
+library(readr)    #Import data files into R
+library(readxl)   #Import excel files into R
+library(dplyr)    #Manipulating data
+library(stringr)  #Manipulating text
 ```
 
 ## Data sources
