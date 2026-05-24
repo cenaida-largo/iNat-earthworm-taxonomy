@@ -14,3 +14,18 @@ This script explores the alignment of the iNaturalist earthworm (Crassiclitellat
 - **Misırlıoğlu et al. (2023)**, an updated global checklist of valid earthworm species.
 
 Subspecies are excluded from this analysis.
+
+## Setup
+
+Package versions are tracked with \`renv\`.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here) #Project relative file paths
+library(readr) #Import data files into R
+library(readxl) #Import excel files into R
+library(dplyr) #Manipulating data
+library(stringr) #Manipulating text
+```
