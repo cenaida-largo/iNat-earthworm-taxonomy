@@ -11,7 +11,7 @@ This script explores the alignment of the iNaturalist earthworm (Crassiclitellat
 
 - **WoRMS** (World Register of Marine Species), the current taxonomy source used by iNaturalist.
 
-- **Misırlıoğlu et al. (2023)**, an updated global checklist of valid earthworm species.
+- **Misırlıoğlu et al.(2023)**, an updated global checklist of valid earthworm species.
 
 Subspecies are excluded from this analysis.
 
