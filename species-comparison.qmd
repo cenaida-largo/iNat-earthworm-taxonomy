@@ -23,10 +23,10 @@ Package versions are tracked with \`renv\`.
 #| message: false
 #| warning: false
 
-library(here) #Project relative file paths
-library(readr) #Import data files into R
-library(readxl) #Import excel files into R
-library(dplyr) #Manipulating data
+library(here)    #Project relative file paths
+library(readr)   #Import data files into R
+library(readxl)  #Import excel files into R
+library(dplyr)   #Manipulating data
 library(stringr) #Manipulating text
 ```
 
