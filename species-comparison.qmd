@@ -20,6 +20,7 @@ Subspecies are excluded from this analysis.
 Package versions are tracked with \`renv\`.
 
 ```{r}
+#| label: setup-packages
 #| message: false
 #| warning: false
 
@@ -85,3 +86,33 @@ Mısırlıoğlu, M., Reynolds, J.W., Stovanić, M, Trakić, T, Sekulić, J., Jam
 Earthworms (Clitellata, Megadrili) of the world: an updated checklist of valid species and families, with notes on their distribution.
 
 Zootaxa. <https://doi.org/10.11646/zootaxa.5255.1.33>
+
+# Data import
+
+iNaturalist Taxonomy DarwinCore Archive
+
+```{r}
+#| label: import-INAT
+
+INAT_raw <- read_csv(
+  here("data", "raw", "inaturalist-taxonomy.dwca", "taxa.csv"))
+```
+
+WoRMS Crassiclitellata taxon list
+
+```{r}
+#| label: import-WORMS
+
+WORMS_raw <- read_xlsx(
+  here("data", "raw", "Crassiclitellata_18-05-2026.xlsx"))
+```
+
+A checklist of megadrile earthworm (Annelida: Clitellata) species
+
+```{r}
+#| label: import-WME
+
+WME_raw <- read_xlsx(
+  here("data", "raw", "World-megadrile-earthworm-species-checklist-2023-Zenodo-v4.xlsx"), 
+  sheet = "Species")
+```
