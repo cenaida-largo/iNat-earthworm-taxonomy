@@ -172,7 +172,7 @@ I will only remove the "unaccepted" species from the database.
 
 WORMS <- WORMS_raw %>%
   filter(RankName == "Species", 
-         Status != c("unaccepted")) %>% 
+         Status != "unaccepted") %>% 
   select(family = Family,
          genus = Genus,
          specificEpithet = Species,
@@ -226,12 +226,10 @@ No duplicates found in the iNaturalist taxonomy dataset
     ```{r}
     #| label: species-INAT
 
-    sppINAT <- INAT %>%
-      count(species_INAT) %>%
-      summarise(total = sum(n))
+sppINAT <- n_distinct(INAT$species_INAT)
     ```
 
-Species total = 628.
+Species total = `r sppINAT`.
 
 Only 201 spp currently have Research Grade observations on iNaturalist (24-05-2026).
 
@@ -262,12 +260,10 @@ Only 201 spp currently have Research Grade observations on iNaturalist (24-05-20
     ```{r}
     #| label: species-WORMS
 
-    sppWORMS <- WORMS %>%
-      count(species_WORMS) %>%
-      summarise(total = sum(n))
+    sppWORMS <- n_distinct(WORMS$species_WORMS)
     ```
 
-Species total = 5555 - 18 = 5537.
+Species total = `r sppWORMS` - duplicados = 5537.
 
 3.  Family summary
 
@@ -296,12 +292,10 @@ No duplicates detected.
     ```{r}
     #| label: species-WME
 
-    sppWME <- WME %>%
-      count(species_WME) %>%
-      summarise(total = sum(n))
+    sppWME <- n_distinct(WME$species_WME)
     ```
 
-Total species = 5418.
+Species total = `r sppINAT`.
 
 3.  Family summary
 
@@ -378,11 +372,11 @@ nrow(unmatchedALL)
 
 36 iNaturalist species were absent from both WoRMS and WME due to:
 
-- recently described taxa e.g. Diplocardia farrishi
+- recently described taxa e.g. *Diplocardia farrishi*
 
-- misspelling in the original dataset e.g. Diplotrema planumfluvialis / planumfluvalis
+- misspelling in the original dataset e.g. *Diplotrema planumfluvialis* / *planumfluvalis*
 
-- misspelling in inaturalist e.g. Diplotrema paraeintestinalis /paraintestinalis
+- misspelling in inaturalist e.g. *Diplotrema paraeintestinalis* /*paraintestinalis*
 
 ```{r}
 #| label: export-unmatched
