@@ -89,7 +89,7 @@ Zootaxa. <https://doi.org/10.11646/zootaxa.5255.1.33>
 
 # Data import
 
-iNaturalist Taxonomy DarwinCore Archive
+iNaturalist Taxonomy DarwinCore Archive:
 
 ```{r}
 #| label: import-INAT
@@ -98,7 +98,7 @@ INAT_raw <- read_csv(
   here("data", "raw", "inaturalist-taxonomy.dwca", "taxa.csv"))
 ```
 
-WoRMS Crassiclitellata taxon list
+WoRMS Crassiclitellata taxon list:
 
 ```{r}
 #| label: import-WORMS
@@ -107,7 +107,7 @@ WORMS_raw <- read_xlsx(
   here("data", "raw", "Crassiclitellata_18-05-2026.xlsx"))
 ```
 
-A checklist of megadrile earthworm (Annelida: Clitellata) species
+Megadrile earthworm (Annelida: Clitellata) species checklist:
 
 ```{r}
 #| label: import-WME
@@ -115,4 +115,74 @@ A checklist of megadrile earthworm (Annelida: Clitellata) species
 WME_raw <- read_xlsx(
   here("data", "raw", "World-megadrile-earthworm-species-checklist-2023-Zenodo-v4.xlsx"), 
   sheet = "Species")
+```
+
+# Data cleaning
+
+Simplify the raw data by retaining the following columns:
+
+- family
+
+- genus
+
+- specificEpithet
+
+- species_database
+
+- author (when available)
+
+## INAT
+
+```{r}
+#| label: clean-INAT
+
+INAT <- INAT_raw %>% 
+  filter(taxonRank == "species",
+         order == "Crassiclitellata") %>% 
+  select(family,
+         genus,
+         specificEpithet) %>% 
+  mutate(species_INAT = paste(genus, specificEpithet)) %>% 
+  arrange(family,
+          genus,
+          specificEpithet)
+```
+
+## WORMS
+
+```{r}
+#| label: clean-WORMS
+
+WORMS <- WORMS_raw %>%
+  filter(RankName == "Species",
+         Status != "unaccepted") %>%
+  select(family = Family,
+         genus = Genus,
+         specificEpithet = Species,
+         author = Authority,
+         species_WORMS = ScientificName) %>% 
+  distinct(species_WORMS,
+           author,
+           .keep_all = TRUE) %>%
+  arrange(family,
+          genus,
+          specificEpithet)
+```
+
+## WME
+
+```{r}
+#| label: clean-WME
+
+WME <- WME_raw %>%
+  select(family = Family,
+         genus = Genus,
+         specificEpithet = species,
+         author = taxon_author) %>%
+  mutate(species_WME = paste(genus, specificEpithet)) %>% 
+  distinct(species_WME,
+           .keep_all = TRUE) %>% 
+   arrange(family,
+          genus,
+          specificEpithet)
 ```
