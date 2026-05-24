@@ -1,0 +1,16 @@
+---
+title: "species-comparison"
+author: "Cenaida Largo"
+format: html
+editor: visual
+---
+
+## Overview
+
+This script explores the alignment of the iNaturalist earthworm (Crassiclitellata) taxonomy with:
+
+- **WoRMS** (World Register of Marine Species), the current taxonomy source used by iNaturalist.
+
+- **Misırlıoğlu et al. (2023)**, an updated global checklist of valid earthworm species.
+
+Subspecies are excluded from this analysis.
