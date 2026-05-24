@@ -219,7 +219,7 @@ WME <- WME_raw %>%
     INAT %>% count(species_INAT) %>% filter(n > 1)
     ```
 
-    No duplicates found in the iNaturalist taxonomy dataset
+No duplicates found in the iNaturalist taxonomy dataset
 
 2.  Count species
 
@@ -231,9 +231,9 @@ WME <- WME_raw %>%
       summarise(total = sum(n))
     ```
 
-    Species total = 628.
+Species total = 628.
 
-    Only 201 spp currently have Research Grade observations on iNaturalist (24-05-2026).
+Only 201 spp currently have Research Grade observations on iNaturalist (24-05-2026).
 
 3.  Family summary
 
@@ -255,7 +255,7 @@ WME <- WME_raw %>%
       filter(n > 1)
     ```
 
-    18 duplicate species detected in the WoRMS taxon list
+18 duplicate species detected in the WoRMS taxon list
 
 2.  Count species
 
@@ -267,7 +267,7 @@ WME <- WME_raw %>%
       summarise(total = sum(n))
     ```
 
-    Species total = 5555 - 18 = 5537.
+Species total = 5555 - 18 = 5537.
 
 3.  Family summary
 
@@ -289,7 +289,7 @@ WME <- WME_raw %>%
       filter(n > 1)
     ```
 
-    No duplicates detected.
+No duplicates detected.
 
 2.  Count species
 
@@ -301,7 +301,7 @@ WME <- WME_raw %>%
       summarise(total = sum(n))
     ```
 
-    Total species = 5418.
+Total species = 5418.
 
 3.  Family summary
 
@@ -310,3 +310,84 @@ WME <- WME_raw %>%
 
     WME |> count(family)
     ```
+
+## Alignment
+
+### INAT vs WORMS
+
+How many iNaturalist species do not match the World Register of Marine Species?
+
+```{r}
+#| label: INAT-vs-WORMS
+
+unmatchedWORMS <- anti_join(INAT, WORMS, by = c("species_INAT" = "species_WORMS"))
+nrow(unmatchedWORMS)
+```
+
+219 unmatched spp (34.9%).
+
+```{r}
+#| label: export-unmatchedWORMS
+
+write_csv(
+  unmatchedWORMS,
+  here("outputs", "unmatched_WORMS.csv"))
+```
+
+### INAT vs WME
+
+How many iNaturalist species do not match the World Megadrile Earthworm database?
+
+```{r}
+#| label: INAT-vs-WME
+
+unmatchedWME <- anti_join(INAT, WME, by = c("species_INAT" = "species_WME")) 
+nrow(unmatchedWME)
+```
+
+72 unmatched spp (11.5%).
+
+```{r}
+#| label: export-unmatchedWME
+
+write_csv(
+  unmatchedWME,
+  here("outputs", "unmatched_WME.csv"))
+```
+
+### Combined coverage
+
+Are all active iNaturalist earthworm species represented in at least one external framework?
+
+```{r}
+#| label: WORMS+WME
+
+WORMS_WME <- bind_rows(
+  WORMS %>% rename(species = species_WORMS),
+  WME %>% rename(species = species_WME)
+)
+```
+
+```{r}
+#| label: INATvsWORMS+WME
+
+unmatchedALL <- anti_join(INAT, WORMS_WME, 
+                          by = c("species_INAT" = "species"))
+nrow(unmatchedALL)
+```
+
+36 iNaturalist species were absent from both WoRMS and WME due to:
+
+- recently described taxa e.g. Diplocardia farrishi
+
+- misspelling in the original dataset e.g. Diplotrema planumfluvialis / planumfluvalis
+
+- misspelling in inaturalist e.g. Diplotrema paraeintestinalis /paraintestinalis
+
+```{r}
+#| label: export-unmatched
+
+write_csv(
+  unmatchedALL,
+  here("outputs", "unmatched_ALL.csv"))
+```
