@@ -37,9 +37,17 @@ library(stringr)  #Manipulating text
 
 Download all “active” names from the **iNaturalist Taxonomy DarwinCore Archive** at
 
-<https://www.inaturalist.org/pages/developers>
+<https://www.inaturalist.org/pages/developers> retrieved 05-2026.
 
 Updated monthly.
+
+Notes
+
+Taxon author name and year aren’t stored in iNaturalist.
+
+I submitted a feature request to include the taxa authority in the DWCA taxonomy export but it was denied by the forum moderator.
+
+See previous discussion here: https://forum.inaturalist.org/t/include-author-citations-for-taxa/671.
 
 ### WoRMS
 
@@ -47,7 +55,7 @@ Updated monthly.
 
 <https://www.marinespecies.org/aphia.php?p=download&what=taxlist>
 
-Because the web interface limits exports to 1000 rows, a custom export was requested using:
+Because the web interface limits exports to 1000 rows, a custom export was requested at
 
 <https://www.marinespecies.org/usersrequest.php>
 
@@ -63,13 +71,13 @@ Requested fields:
 
 - Classification
 
-- Accepted taxon information.
+- Accepted taxon information
 
 Make sure to change the environment field from “marine = yes” to “marine = any”.
 
 Contact: info(at)marinespecies.org
 
-### **Misirlioğlu 2023**
+### **Misirlioğlu et al 2023**
 
 **Reference to this dataset:**
 
@@ -128,7 +136,7 @@ Simplify the raw data by retaining the following columns:
 
 - specificEpithet
 
-- species_database
+- species\_*DATABASE*
 
 - author (when available)
 
@@ -149,6 +157,16 @@ INAT <- INAT_raw %>%
           specificEpithet)
 ```
 
+Duplicate check:
+
+```{r}
+#| label: duplicates-INAT
+
+INAT %>% count(species_INAT) %>% filter(n > 1)
+```
+
+No duplicates found in the iNaturalist taxonomy dataset.
+
 ## WORMS
 
 The raw dataset includes the following status:
@@ -159,9 +177,9 @@ The raw dataset includes the following status:
 unique(WORMS_raw$Status)
 ```
 
-(at)thirty_legs commented in the flag:
+(at)thirty_legs commented in the iNaturalist flag:
 
-"It also seems like iNaturalist did not import some species that have the uncertain/unassessed status on WoRMS, leading to further holes in the iNat taxonomy."
+"It also seems like iNaturalist did not import **some** species that have the uncertain/unassessed status on WoRMS, leading to further holes in the iNat taxonomy."
 
 Since the comment implies that only "some" species with these status were not imported,
 
@@ -177,8 +195,7 @@ WORMS <- WORMS_raw %>%
          genus = Genus,
          specificEpithet = Species,
          author = Authority,
-         species_WORMS = ScientificName,
-         Status) %>% 
+         species_WORMS = ScientificName) %>% 
   distinct(species_WORMS,
            author,
            .keep_all = TRUE) %>%
@@ -186,6 +203,18 @@ WORMS <- WORMS_raw %>%
           genus,
           specificEpithet)
 ```
+
+Duplicate check:
+
+```{r}
+#| label: duplicates-WORMS
+
+WORMS %>%
+  count(species_WORMS) %>%
+  filter(n > 1)
+```
+
+18 duplicate species detected in the WoRMS taxon list
 
 ## WME
 
@@ -198,12 +227,24 @@ WME <- WME_raw %>%
          specificEpithet = species,
          author = taxon_author) %>%
   mutate(species_WME = paste(genus, specificEpithet)) %>% 
-  distinct(species_WME,
+  distinct(species_WME, #mantener species=subspecies!!!!!!!!!!
            .keep_all = TRUE) %>% 
    arrange(family,
           genus,
           specificEpithet)
 ```
+
+Duplicate check:
+
+```{r}
+#| label: duplicates-WME
+
+WME %>%
+  count(species_WME) %>%
+  filter(n > 1)
+```
+
+No duplicates found in the WME taxonomy dataset.
 
 # Results
 
@@ -211,23 +252,13 @@ WME <- WME_raw %>%
 
 ### INAT
 
-1.  Detect duplicates
+Species count:
 
-    ```{r}
-    #| label: duplicates-INAT
-
-    INAT %>% count(species_INAT) %>% filter(n > 1)
-    ```
-
-No duplicates found in the iNaturalist taxonomy dataset
-
-2.  Count species
-
-    ```{r}
-    #| label: species-INAT
+```{r}
+#| label: species-INAT
 
 sppINAT <- n_distinct(INAT$species_INAT)
-    ```
+```
 
 Species total = `r sppINAT`.
 
@@ -242,18 +273,6 @@ Only 201 spp currently have Research Grade observations on iNaturalist (24-05-20
     ```
 
 ### WORMS
-
-1.  Detect duplicates
-
-    ```{r}
-    #| label: duplicates-WORMS
-
-    WORMS %>%
-      count(species_WORMS) %>%
-      filter(n > 1)
-    ```
-
-18 duplicate species detected in the WoRMS taxon list
 
 2.  Count species
 
@@ -321,6 +340,12 @@ nrow(unmatchedWORMS)
 219 unmatched spp (34.9%).
 
 ```{r}
+coverage_WORMS <- 100 * (
+  (sppINAT - nrow(unmatchedWORMS)) / sppINAT
+)
+```
+
+```{r}
 #| label: export-unmatchedWORMS
 
 write_csv(
@@ -340,6 +365,12 @@ nrow(unmatchedWME)
 ```
 
 72 unmatched spp (11.5%).
+
+```{r}
+coverage_WME <- 100 * (
+  (sppINAT - nrow(unmatchedWME)) / sppINAT
+)
+```
 
 ```{r}
 #| label: export-unmatchedWME
@@ -368,20 +399,4 @@ WORMS_WME <- bind_rows(
 unmatchedALL <- anti_join(INAT, WORMS_WME, 
                           by = c("species_INAT" = "species"))
 nrow(unmatchedALL)
-```
-
-36 iNaturalist species were absent from both WoRMS and WME due to:
-
-- recently described taxa e.g. *Diplocardia farrishi*
-
-- misspelling in the original dataset e.g. *Diplotrema planumfluvialis* / *planumfluvalis*
-
-- misspelling in inaturalist e.g. *Diplotrema paraeintestinalis* /*paraintestinalis*
-
-```{r}
-#| label: export-unmatched
-
-write_csv(
-  unmatchedALL,
-  here("outputs", "unmatched_ALL.csv"))
 ```
