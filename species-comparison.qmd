@@ -264,65 +264,53 @@ Species total = `r sppINAT`.
 
 Only 201 spp currently have Research Grade observations on iNaturalist (24-05-2026).
 
-3.  Family summary
+Family summary:
 
-    ```{r}
-    #| label: sum-INAT
+```{r}
+#| label: sum-INAT
 
-    INAT |> count(family)
-    ```
+INAT |> count(family)
+```
 
 ### WORMS
 
-2.  Count species
+Count species:
 
-    ```{r}
-    #| label: species-WORMS
+```{r}
+#| label: species-WORMS
 
-    sppWORMS <- n_distinct(WORMS$species_WORMS)
-    ```
+sppWORMS <- n_distinct(WORMS$species_WORMS)
+```
 
-Species total = `r sppWORMS` - duplicados = 5537.
+Species total = `r sppWORMS` - duplicados = 5537. !!!!!!!!!!!!!!!!!!!!!!
 
-3.  Family summary
+Family summary:
 
-    ```{r}
-    #| label: sum-WORMS
+```{r}
+#| label: sum-WORMS
 
-    WORMS |> count(family)
-    ```
+WORMS |> count(family)
+```
 
 ### WME
 
-1.  Detect duplicates
+Count species:
 
-    ```{r}
-    #| label: duplicates-WME
+```{r}
+#| label: species-WME
 
-    WME %>%
-      count(species_WME) %>%
-      filter(n > 1)
-    ```
+sppWME <- n_distinct(WME$species_WME)
+```
 
-No duplicates detected.
+Species total = `r sppWME`.
 
-2.  Count species
+Family summary
 
-    ```{r}
-    #| label: species-WME
+```{r}
+#| label: sum-WME
 
-    sppWME <- n_distinct(WME$species_WME)
-    ```
-
-Species total = `r sppINAT`.
-
-3.  Family summary
-
-    ```{r}
-    #| label: sum-WME
-
-    WME |> count(family)
-    ```
+WME |> count(family)
+```
 
 ## Alignment
 
@@ -333,11 +321,13 @@ How many iNaturalist species do not match the World Register of Marine Species?
 ```{r}
 #| label: INAT-vs-WORMS
 
-unmatchedWORMS <- anti_join(INAT, WORMS, by = c("species_INAT" = "species_WORMS"))
+unmatchedWORMS <- anti_join(INAT, 
+                            WORMS, 
+                            by = c("species_INAT" = "species_WORMS"))
 nrow(unmatchedWORMS)
 ```
 
-219 unmatched spp (34.9%).
+219 unmatched spp (34.9%). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ```{r}
 coverage_WORMS <- 100 * (
@@ -360,11 +350,13 @@ How many iNaturalist species do not match the World Megadrile Earthworm database
 ```{r}
 #| label: INAT-vs-WME
 
-unmatchedWME <- anti_join(INAT, WME, by = c("species_INAT" = "species_WME")) 
+unmatchedWME <- anti_join(INAT, 
+                          WME, 
+                          by = c("species_INAT" = "species_WME")) 
 nrow(unmatchedWME)
 ```
 
-72 unmatched spp (11.5%).
+72 unmatched spp (11.5%). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ```{r}
 coverage_WME <- 100 * (
@@ -396,7 +388,16 @@ WORMS_WME <- bind_rows(
 ```{r}
 #| label: INATvsWORMS+WME
 
-unmatchedALL <- anti_join(INAT, WORMS_WME, 
+unmatchedALL <- anti_join(INAT, 
+                          WORMS_WME, 
                           by = c("species_INAT" = "species"))
 nrow(unmatchedALL)
+```
+
+```{r}
+#| label: export-unmatched
+
+write_csv(
+  unmatchedALL,
+  here("outputs", "unmatched_ALL.csv"))
 ```
