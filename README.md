@@ -15,7 +15,7 @@ Datasets
 
 * WORMS, World Register of Marine Species taxon list.
 
-* WME, World megadrile earthworm species checklist.
+* WME, World megadrile earthworm species checklist (Misirlioğlu et al, 2023).
 
 
 
