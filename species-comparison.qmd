@@ -17,7 +17,7 @@ Subspecies are excluded from this analysis.
 
 ## Setup
 
-Package versions are tracked with \`renv\`.
+Package versions are tracked with `renv`.
 
 ```{r}
 #| label: setup-packages
@@ -37,17 +37,11 @@ library(stringr)  #Manipulating text
 
 Download all “active” names from the **iNaturalist Taxonomy DarwinCore Archive** at
 
-<https://www.inaturalist.org/pages/developers> retrieved 05-2026.
+<https://www.inaturalist.org/pages/developers> - retrieved 05-2026, updated monthly
 
-Updated monthly.
+Notes: Taxon author name and year aren’t stored in iNaturalist.
 
-Notes:
-
-Taxon author name and year aren’t stored in iNaturalist.
-
-I submitted a feature request to include the taxa authority in the DWCA taxonomy export but it was denied by the forum moderator.
-
-See previous discussion here: https://forum.inaturalist.org/t/include-author-citations-for-taxa/671.
+I submitted a feature request to include the taxa authority in the DWCA taxonomy export but it was denied by the forum moderator. See previous discussion here: https://forum.inaturalist.org/t/include-author-citations-for-taxa/671.
 
 ### WoRMS
 
@@ -87,7 +81,7 @@ A checklist of megadrile earthworm (Annelida: Clitellata) species and subspecies
 
 Zenodo, <https://doi.org/10.5281/zenodo.7301848>
 
-**Reference to original manuscript:**
+**Reference to the original manuscript:**
 
 Mısırlıoğlu, M., Reynolds, J.W., Stovanić, M, Trakić, T, Sekulić, J., James, S.W., Csuzdi, C., Decaëns, T., Lapied, E., Phillips, H.R.P., Cameron, E.K, Brown, G.G. (2023)
 
@@ -161,11 +155,14 @@ Duplicate check:
 
 ```{r}
 #| label: duplicates-INAT
+#| message: FALSE
 
-INAT %>% count(species_INAT) %>% filter(n > 1)
+INAT_dup <- nrow(INAT %>%
+                   count(species_INAT) %>%
+                   filter(n > 1))
 ```
 
-No duplicates found in the iNaturalist taxonomy dataset.
+`r INAT_dup` duplicate species detected in the iNaturalist taxonomy dataset.
 
 ## WORMS
 
@@ -214,7 +211,7 @@ WORMS_dup <- nrow(WORMS %>%
   filter(n > 1))
 ```
 
-`r WORMS_dup` duplicate species detected in the WoRMS taxon list
+`r WORMS_dup` duplicate species detected in the WoRMS taxon list.
 
 ## WME
 
@@ -239,12 +236,12 @@ Duplicate check:
 ```{r}
 #| label: duplicates-WME
 
-WME %>%
+WME_dup <- nrow(WME %>%
   count(species_WME) %>%
-  filter(n > 1)
+  filter(n > 1))
 ```
 
-No duplicates found in the WME taxonomy dataset.
+`r WME_dup` duplicate species detected in the WME taxonomy dataset.
 
 # Results
 
