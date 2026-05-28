@@ -41,7 +41,7 @@ Download all “active” names from the **iNaturalist Taxonomy DarwinCore Archi
 
 Updated monthly.
 
-Notes
+Notes:
 
 Taxon author name and year aren’t stored in iNaturalist.
 
@@ -209,12 +209,12 @@ Duplicate check:
 ```{r}
 #| label: duplicates-WORMS
 
-WORMS %>%
+WORMS_dup <- nrow(WORMS %>%
   count(species_WORMS) %>%
-  filter(n > 1)
+  filter(n > 1))
 ```
 
-18 duplicate species detected in the WoRMS taxon list
+`r WORMS_dup` duplicate species detected in the WoRMS taxon list
 
 ## WME
 
@@ -400,4 +400,18 @@ nrow(unmatchedALL)
 write_csv(
   unmatchedALL,
   here("outputs", "unmatched_ALL.csv"))
+```
+
+graphs
+
+```{r}
+library(ggVennDiagram)
+
+venn_data <- list(
+  INAT = INAT$species_INAT,
+  WORMS = WORMS$species_WORMS,
+  WME = WME$species_WME
+)
+
+ggVennDiagram(venn_data)
 ```
