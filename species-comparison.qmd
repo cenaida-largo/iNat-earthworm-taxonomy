@@ -15,7 +15,7 @@ This script explores the alignment of the iNaturalist earthworm (Crassiclitellat
 
 Subspecies are excluded from this analysis.
 
-## Setup
+# Setup
 
 Package versions are tracked with `renv`.
 
@@ -217,8 +217,6 @@ sppWORMS <- n_distinct(WORMS$species_WORMS)
 
 Species total = `r sppWORMS`
 
-
-
 ### WME
 
 Count species:
@@ -269,7 +267,6 @@ write_csv(unmatchedWME, here("outputs", "unmatched_WME.csv"))
 
 `r n_unmatchedWME` unmatched spp (`r sprintf("%.2f%%", (n_unmatchedWME / sppINAT) * 100)`).
 
-
 ### Combined coverage
 
 Are all active iNaturalist earthworm species represented in at least one external framework?
@@ -293,6 +290,7 @@ write_csv(unmatchedALL, here("outputs", "unmatched_ALL.csv"))
 `r n_unmatchedALL` unmatched spp (`r sprintf("%.2f%%", (n_unmatchedALL / sppINAT) * 100)`).
 
 ## Data visualization
+
 Coverage of iNaturalist earthworm species
 
 ```{r}
@@ -376,5 +374,3 @@ ggsave(
   dpi = 600
 )
 ```
-
-
