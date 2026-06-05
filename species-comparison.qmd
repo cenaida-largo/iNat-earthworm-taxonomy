@@ -30,7 +30,7 @@ library(readxl)   #Import excel files into R
 library(dplyr)    #Manipulating data
 library(tidyr)    #Tidy data
 library(stringr)  #Manipulating text
-library(ggplot2) #data visualisations
+library(ggplot2)  #Data visualisations
 ```
 
 # Data import
@@ -95,7 +95,7 @@ INAT <- INAT_raw %>%
           specificEpithet)
 ```
 
-Duplicate check:
+Duplicate check
 
 ```{r}
 #| label: duplicates-INAT
@@ -145,7 +145,7 @@ WORMS <- WORMS_raw %>%
           specificEpithet)
 ```
 
-Duplicate check:
+Duplicate check
 
 ```{r}
 #| label: duplicates-WORMS
@@ -203,11 +203,11 @@ sppINAT <- n_distinct(INAT$species_INAT)
 
 Species total = `r sppINAT`.
 
-Only 201/628 spp currently have Research Grade observations on iNaturalist (24-05-2026).
+Only 201/628 spp currently (24-05-2026) have Research Grade (RG) observations on iNaturalist.
 
 ### WORMS
 
-Count species:
+Species count
 
 ```{r}
 #| label: species-WORMS
@@ -219,7 +219,7 @@ Species total = `r sppWORMS`
 
 ### WME
 
-Count species:
+Species count
 
 ```{r}
 #| label: species-WME
