@@ -6,8 +6,7 @@ Download all “active” names from the **iNaturalist Taxonomy DarwinCore Archi
 
 <https://www.inaturalist.org/pages/developers> - retrieved 05-2026, updated monthly.
 
-Notes: Taxon author name and year aren’t stored in iNaturalist.
-
+> Notes: Taxon author name and year aren’t stored in iNaturalist.
 I submitted a feature request to include the taxa authority in the DWCA taxonomy export but it was denied by the forum moderator. See previous discussion here: https://forum.inaturalist.org/t/include-author-citations-for-taxa/671.
 
 ### WoRMS
@@ -34,8 +33,7 @@ Requested fields:
 
 - Accepted taxon information
 
-Make sure to change the environment field from “marine = yes” to “marine = any”.
-
+>Notes: Make sure to change the environment field from “marine = yes” to “marine = any”.
 Contact: info(at)marinespecies.org
 
 ### **Misirlioğlu et al 2023**
