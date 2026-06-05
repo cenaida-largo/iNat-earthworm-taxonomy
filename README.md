@@ -23,7 +23,7 @@ https://www.inaturalist.org/flags/801884
 * *unmatched_ALL*, a list of iNaturalist species that are not included in WORMS or WME.
 
 **Results**
-![](outputs/coverage_INAT.png){fig-alt="Coverage of iNaturalist earthworm species in WoRMS and WME"} 
+![](outputs/coverage_INAT.png) 
 
 *Figure 1. Stacked bar chart showing the number of iNaturalist earthworm species matched and unmatched to WoRMS and the World Megadrile Earthworm Checklist (WME).*
 
