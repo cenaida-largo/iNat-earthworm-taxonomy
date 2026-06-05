@@ -29,6 +29,7 @@ library(readr)    #Import data files into R
 library(readxl)   #Import excel files into R
 library(dplyr)    #Manipulating data
 library(stringr)  #Manipulating text
+library(ggplot2) #data visualisations
 ```
 
 # Data import
@@ -320,10 +321,8 @@ coverage_long <- coverage %>%
 fig_coverage <- ggplot(coverage_long,
        aes(source, species, fill = status)) +
   geom_col(
-    width = 0.7,
-    color = "white",
-    linewidth = 0.4
-  ) +
+    width = 0.7
+    ) +
   coord_flip() +
   scale_fill_manual(
     values = c(
