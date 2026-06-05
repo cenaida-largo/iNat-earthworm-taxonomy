@@ -9,7 +9,7 @@ https://www.inaturalist.org/flags/801884
 
 "WORMS is not a suitable taxonomic source for Crassiclitellata. Careful checking of WORMS database reveals that it's rather incomplete for earthworm taxa. Instead, Misirlioğlu, M., Reynolds, J., Stojanović, M., Trakić, T., Sekulić, J., James, S., ... \\\& Brown, G. (2023). Earthworms (Clitellata, Megadrili) of the world: an updated checklist of valid species and families, with notes on their distribution. https://doi.org/10.11646/zootaxa.5255.1.33, with the actual database freely available here https://zenodo.org/records/7745110 -should be used."
 
-*Datasets*
+**Datasets**
 
 * INAT, the iNaturalist taxonomy database.
 
@@ -17,7 +17,7 @@ https://www.inaturalist.org/flags/801884
 
 * WME, World megadrile earthworm species checklist (Misirlioğlu et al, 2023).
 
-*Outputs*
+**Outputs**
 
 Here, you can find:
 * A list of iNaturalist species that are not included in WORMS (unmatched_WORMS)
