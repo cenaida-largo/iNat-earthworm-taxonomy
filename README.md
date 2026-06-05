@@ -2,7 +2,7 @@
 
 This repository explores how the current iNaturalist taxonomy for earthworms (Crassiclitellata) aligns with two major external taxonomic sources.
 
-iNaturalist currently sources its earthworm taxonomy from the World Register of Marine Species (WoRMS). However, the coverage of this taxa in WoRMS has been shown to contain important gaps, including missing recently described species and unresolved synonymies. As a result, a proposal has been made to adopt a new External Taxonomic Authority List for Crassiclitellata.
+iNaturalist currently sources its earthworm taxonomy from the World Register of Marine Species (WoRMS). However, the coverage of this taxa in WoRMS has been shown to contain important gaps. As a result, a proposal has been made to adopt a new External Taxonomic Authority List for Crassiclitellata.
 
 Issue raised by Daniel F. Marchán (at)danifermch at
 https://www.inaturalist.org/flags/801884
