@@ -28,6 +28,7 @@ library(here)     #Project relative file paths
 library(readr)    #Import data files into R
 library(readxl)   #Import excel files into R
 library(dplyr)    #Manipulating data
+library(tidyr)    #Tidy data
 library(stringr)  #Manipulating text
 library(ggplot2) #data visualisations
 ```
@@ -295,6 +296,7 @@ write_csv(unmatchedALL, here("outputs", "unmatched_ALL.csv"))
 Coverage of iNaturalist earthworm species
 
 ```{r}
+#| label: stacked bar chart
 coverage <- tibble(
   source = c("WoRMS", "WME"),
   matched = c(
@@ -364,6 +366,7 @@ fig_coverage <- ggplot(coverage_long,
 ```
 
 ```{r}
+#| label: figure upload
 ggsave(
   filename = here("outputs", "coverage_INAT.png"),
   plot = fig_coverage,
