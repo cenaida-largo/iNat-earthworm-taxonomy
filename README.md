@@ -18,7 +18,7 @@ https://www.inaturalist.org/flags/801884
 * WME, World megadrile earthworm species checklist (Misirlioğlu et al, 2023).
 
 **Outputs**
-* *unmatched_WORMS*, a list of iNaturalist species that are not included in WORMS. 
+* ![](outputs/unmatched_WORMS.csv)*unmatched_WORMS*, a list of iNaturalist species that are not included in WORMS. 
 * *unmatched_WME*, a list of iNaturalist species that are not included in WME. 
 * *unmatched_ALL*, a list of iNaturalist species that are not included in WORMS or WME.
 
