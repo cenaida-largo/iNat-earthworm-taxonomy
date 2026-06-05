@@ -22,7 +22,7 @@ https://www.inaturalist.org/flags/801884
 
 * *unmatched_WME*, a list of iNaturalist species that are not included in WME. 
 
-* *unmatched_ALL*, a list of iNaturalist species that are not included in WORMS or WME.
+* *unmatched_ALL*, a list of iNaturalist species not found in either WoRMS or WME.
 
 * *coverage_INAT.png*, stacked bar chart.
 
