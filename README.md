@@ -20,9 +20,9 @@ https://www.inaturalist.org/flags/801884
 **Outputs**
 
 Here, you can find:
-* A list of iNaturalist species that are not included in WORMS (unmatched_WORMS)
-* A list of iNaturalist species that are not included in WME (unmatched_WORMS)
-* A list of iNaturalist species that are not included in WORMS or WME (unmatched_ALL)
+* A list of iNaturalist species that are not included in WORMS, *unmatched_WORMS*
+* A list of iNaturalist species that are not included in WME, *unmatched_WORMS*
+* A list of iNaturalist species that are not included in WORMS or WME, *unmatched_ALL*
 
 
 
