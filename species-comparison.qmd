@@ -168,7 +168,7 @@ WME <- WME_raw %>%
          specificEpithet = species,
          author = taxon_author) %>%
   mutate(species_WME = paste(genus, specificEpithet)) %>% 
-  distinct(species_WME, #mantener species=subspecies!!!!!!!!!!
+  distinct(species_WME, #this doesn't retain the author of the nominate subspecies.
            .keep_all = TRUE) %>% 
    arrange(family,
           genus,
@@ -276,7 +276,11 @@ Are all active iNaturalist earthworm species represented in at least one externa
 
 WORMS_WME <- bind_rows(
   WORMS %>% rename(species = species_WORMS),
-  WME %>% rename(species = species_WME))
+  WME %>% rename(species = species_WME)) %>% 
+  distinct(species, .keep_all = TRUE)
+  
+
+
 
 unmatchedALL <- anti_join(INAT, 
                           WORMS_WME, 
@@ -361,6 +365,8 @@ fig_coverage <- ggplot(coverage_long,
   color = "white",
   size = 3.5
 )
+
+fig_coverage
 ```
 
 ```{r}
